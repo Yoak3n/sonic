@@ -13,8 +13,8 @@ const TableNameMenu = "menu"
 // Menu mapped from table <menu>
 type Menu struct {
 	ID         int32      `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
-	CreateTime time.Time  `gorm:"column:create_time;type:datetime;not null" json:"create_time"`
-	UpdateTime *time.Time `gorm:"column:update_time;type:datetime" json:"update_time"`
+	CreateTime time.Time  `gorm:"column:create_time;not null" json:"create_time"`
+	UpdateTime *time.Time `gorm:"column:update_time" json:"update_time"`
 	Icon       string     `gorm:"column:icon;type:varchar(50);not null" json:"icon"`
 	Name       string     `gorm:"column:name;type:varchar(50);not null;index:menu_name,priority:1" json:"name"`
 	ParentID   int32      `gorm:"column:parent_id;type:int;not null;index:menu_parent_id,priority:1" json:"parent_id"`

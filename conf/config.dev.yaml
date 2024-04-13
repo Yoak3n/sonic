@@ -12,8 +12,8 @@ logging:
   compress: false # 是否对旧日志使用gzip进行压缩
 
 
-### 数据库配置， MySQL 和 SQLite3 二选一 .如果同时配置了MySQL 或 SQLite3 ，优先使用 Sqlite3
-### The Database configuration,You should choose one between MySQL and SQLite3,if both MySQL and SQLite3 are configured ,use Sqlite3 first
+### 数据库配置， SQLite3 MySQL PostgreSQL 三选一 .如果同时配置了三者，按 SQLite3 > MySQL > PostgreSQL 顺序优先使用
+### The Database Configuration, SQLite3, MySQL, PostgreSQL. If all three are configured at the same time, SQLite3 > MySQL > PostgreSQL takes precedence.
 
 sqlite3:
   enable: true
@@ -23,7 +23,12 @@ sqlite3:
 mysql:
   dsn: root:12345678@tcp(127.0.0.1:3306)/sonicdb?charset=utf8mb4&parseTime=True&loc=Local&interpolateParams=true
 
-
+postgre:
+  host: 127.0.0.1
+  port: 5432
+  db: sonic_db
+  username: postgres
+  password: 123456
 
 sonic:
   mode: "development"

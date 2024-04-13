@@ -2,10 +2,12 @@ package dal
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -38,6 +40,12 @@ func NewGormDB(conf *config.Config, gormLogger logger.Interface) *gorm.DB {
 			sonicLog.Fatal("connect to MySQL error", zap.Error(err))
 		}
 		DBType = consts.DBTypeMySQL
+	} else if conf.PostgreSQL != nil {
+		DB, err = initPostgreSQL(conf, gormLogger)
+		if err != nil {
+			sonicLog.Fatal("connect to PostgreSQL error", zap.Error(err))
+		}
+		DBType = consts.DBTypePostgreSQL
 	} else {
 		sonicLog.Fatal("No database available")
 	}
@@ -81,6 +89,22 @@ func initSQLite(conf *config.Config, gormLogger logger.Interface) (*gorm.DB, err
 	}
 	sonicLog.Info("try to open SQLite3 db", zap.String("path", sqliteConfig.File))
 	db, err := gorm.Open(sqlite.Open(sqliteConfig.File), &gorm.Config{
+		Logger:                   gormLogger,
+		PrepareStmt:              true,
+		SkipDefaultTransaction:   true,
+		DisableNestedTransaction: true,
+	})
+	return db, err
+}
+
+func initPostgreSQL(conf *config.Config, gormLogger logger.Interface) (*gorm.DB, error) {
+	postgresConfig := conf.PostgreSQL
+	if postgresConfig == nil {
+		return nil, xerr.WithMsg(nil, "nil PostgreSQL config")
+	}
+	sonicLog.Info("try to open PostgreSQL db", zap.String("address", postgresConfig.Host), zap.String("port", postgresConfig.Port))
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", postgresConfig.Host, postgresConfig.Port, postgresConfig.Username, postgresConfig.Password, postgresConfig.DB)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger:                   gormLogger,
 		PrepareStmt:              true,
 		SkipDefaultTransaction:   true,

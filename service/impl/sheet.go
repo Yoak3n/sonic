@@ -176,9 +176,16 @@ func (s sheetServiceImpl) Preview(ctx context.Context, sheetID int32) (string, e
 func (s sheetServiceImpl) CountVisit(ctx context.Context) (int64, error) {
 	var count float64
 	sheetDAL := dal.GetQueryByCtx(ctx).Post
-	err := sheetDAL.WithContext(ctx).Select(sheetDAL.Visits.Sum().IfNull(0)).Where(sheetDAL.Type.Eq(consts.PostTypeSheet), sheetDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
-	if err != nil {
-		return 0, WrapDBErr(err)
+	if dal.DBType == consts.DBTypePostgreSQL {
+		err := sheetDAL.WithContext(ctx).Select(sheetDAL.Visits.Sum()).Where(sheetDAL.Type.Eq(consts.PostTypeSheet), sheetDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
+		if err != nil {
+			return 0, WrapDBErr(err)
+		}
+	} else {
+		err := sheetDAL.WithContext(ctx).Select(sheetDAL.Visits.Sum().IfNull(0)).Where(sheetDAL.Type.Eq(consts.PostTypeSheet), sheetDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
+		if err != nil {
+			return 0, WrapDBErr(err)
+		}
 	}
 	return int64(count), nil
 }
@@ -186,9 +193,16 @@ func (s sheetServiceImpl) CountVisit(ctx context.Context) (int64, error) {
 func (s sheetServiceImpl) CountLike(ctx context.Context) (int64, error) {
 	var count float64
 	sheetDAL := dal.GetQueryByCtx(ctx).Post
-	err := sheetDAL.WithContext(ctx).Select(sheetDAL.Likes.Sum().IfNull(0)).Where(sheetDAL.Type.Eq(consts.PostTypeSheet), sheetDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
-	if err != nil {
-		return 0, WrapDBErr(err)
+	if dal.DBType == consts.DBTypePostgreSQL {
+		err := sheetDAL.WithContext(ctx).Select(sheetDAL.Likes.Sum()).Where(sheetDAL.Type.Eq(consts.PostTypeSheet), sheetDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
+		if err != nil {
+			return 0, WrapDBErr(err)
+		}
+	} else {
+		err := sheetDAL.WithContext(ctx).Select(sheetDAL.Likes.Sum().IfNull(0)).Where(sheetDAL.Type.Eq(consts.PostTypeSheet), sheetDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
+		if err != nil {
+			return 0, WrapDBErr(err)
+		}
 	}
 	return int64(count), nil
 }

@@ -13,8 +13,8 @@ const TableNameLink = "link"
 // Link mapped from table <link>
 type Link struct {
 	ID          int32      `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
-	CreateTime  time.Time  `gorm:"column:create_time;type:datetime;not null" json:"create_time"`
-	UpdateTime  *time.Time `gorm:"column:update_time;type:datetime" json:"update_time"`
+	CreateTime  time.Time  `gorm:"column:create_time;not null" json:"create_time"`
+	UpdateTime  *time.Time `gorm:"column:update_time" json:"update_time"`
 	Description string     `gorm:"column:description;type:varchar(255);not null" json:"description"`
 	Logo        string     `gorm:"column:logo;type:varchar(1023);not null" json:"logo"`
 	Name        string     `gorm:"column:name;type:varchar(255);not null;index:link_name,priority:1" json:"name"`

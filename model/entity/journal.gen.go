@@ -15,11 +15,11 @@ const TableNameJournal = "journal"
 // Journal mapped from table <journal>
 type Journal struct {
 	ID            int32              `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
-	CreateTime    time.Time          `gorm:"column:create_time;type:datetime;not null" json:"create_time"`
-	UpdateTime    *time.Time         `gorm:"column:update_time;type:datetime" json:"update_time"`
+	CreateTime    time.Time          `gorm:"column:create_time;not null" json:"create_time"`
+	UpdateTime    *time.Time         `gorm:"column:update_time" json:"update_time"`
 	Content       string             `gorm:"column:content;type:text;not null" json:"content"`
 	Likes         int64              `gorm:"column:likes;type:bigint;not null" json:"likes"`
-	SourceContent string             `gorm:"column:source_content;type:longtext;not null" json:"source_content"`
+	SourceContent string             `gorm:"column:source_content;not null" json:"source_content"`
 	Type          consts.JournalType `gorm:"column:type;type:bigint;not null" json:"type"`
 }
 

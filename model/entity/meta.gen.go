@@ -16,8 +16,8 @@ const TableNameMeta = "meta"
 type Meta struct {
 	ID         int32           `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
 	Type       consts.MetaType `gorm:"column:type;type:bigint;not null" json:"type"`
-	CreateTime time.Time       `gorm:"column:create_time;type:datetime;not null" json:"create_time"`
-	UpdateTime *time.Time      `gorm:"column:update_time;type:datetime" json:"update_time"`
+	CreateTime time.Time       `gorm:"column:create_time;not null" json:"create_time"`
+	UpdateTime *time.Time      `gorm:"column:update_time" json:"update_time"`
 	MetaKey    string          `gorm:"column:meta_key;type:varchar(255);not null" json:"meta_key"`
 	PostID     int32           `gorm:"column:post_id;type:int;not null" json:"post_id"`
 	MetaValue  string          `gorm:"column:meta_value;type:varchar(1023);not null" json:"meta_value"`

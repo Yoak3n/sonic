@@ -15,12 +15,12 @@ const TableNameUser = "user"
 // User mapped from table <user>
 type User struct {
 	ID          int32          `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
-	CreateTime  time.Time      `gorm:"column:create_time;type:datetime;not null" json:"create_time"`
-	UpdateTime  *time.Time     `gorm:"column:update_time;type:datetime" json:"update_time"`
+	CreateTime  time.Time      `gorm:"column:create_time;not null" json:"create_time"`
+	UpdateTime  *time.Time     `gorm:"column:update_time" json:"update_time"`
 	Avatar      string         `gorm:"column:avatar;type:varchar(1023);not null" json:"avatar"`
 	Description string         `gorm:"column:description;type:varchar(1023);not null" json:"description"`
 	Email       string         `gorm:"column:email;type:varchar(127);not null" json:"email"`
-	ExpireTime  *time.Time     `gorm:"column:expire_time;type:datetime" json:"expire_time"`
+	ExpireTime  *time.Time     `gorm:"column:expire_time" json:"expire_time"`
 	MfaKey      string         `gorm:"column:mfa_key;type:varchar(64);not null" json:"mfa_key"`
 	MfaType     consts.MFAType `gorm:"column:mfa_type;type:bigint;not null" json:"mfa_type"`
 	Nickname    string         `gorm:"column:nickname;type:varchar(255);not null" json:"nickname"`

@@ -241,9 +241,16 @@ func (p postServiceImpl) Preview(ctx context.Context, postID int32) (string, err
 func (p postServiceImpl) CountVisit(ctx context.Context) (int64, error) {
 	var count float64
 	postDAL := dal.GetQueryByCtx(ctx).Post
-	err := postDAL.WithContext(ctx).Select(postDAL.Visits.Sum().IfNull(0)).Where(postDAL.Type.Eq(consts.PostTypePost), postDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
-	if err != nil {
-		return 0, WrapDBErr(err)
+	if dal.DBType == consts.DBTypePostgreSQL {
+		err := postDAL.WithContext(ctx).Select(postDAL.Visits.Sum()).Where(postDAL.Type.Eq(consts.PostTypePost), postDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
+		if err != nil {
+			return 0, WrapDBErr(err)
+		}
+	} else {
+		err := postDAL.WithContext(ctx).Select(postDAL.Visits.Sum().IfNull(0)).Where(postDAL.Type.Eq(consts.PostTypePost), postDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
+		if err != nil {
+			return 0, WrapDBErr(err)
+		}
 	}
 	return int64(count), nil
 }

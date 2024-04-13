@@ -15,8 +15,8 @@ const TableNameAttachment = "attachment"
 // Attachment mapped from table <attachment>
 type Attachment struct {
 	ID         int32                 `gorm:"column:id;type:int;primaryKey;autoIncrement:true" json:"id"`
-	CreateTime time.Time             `gorm:"column:create_time;type:datetime;not null;index:attachment_create_time,priority:1" json:"create_time"`
-	UpdateTime *time.Time            `gorm:"column:update_time;type:datetime" json:"update_time"`
+	CreateTime time.Time             `gorm:"column:create_time;not null;index:attachment_create_time,priority:1" json:"create_time"`
+	UpdateTime *time.Time            `gorm:"column:update_time" json:"update_time"`
 	FileKey    string                `gorm:"column:file_key;type:varchar(2047);not null" json:"file_key"`
 	Height     int32                 `gorm:"column:height;type:int;not null" json:"height"`
 	MediaType  string                `gorm:"column:media_type;type:varchar(127);not null;index:attachment_media_type,priority:1" json:"media_type"`
