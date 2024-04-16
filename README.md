@@ -95,7 +95,7 @@ See: https://hub.docker.com/r/gosonic/sonic
 
 ## TODO
 - [ ] i18n
-- [ ] PostgreSQL
+- [x] PostgreSQL
 - [ ] Better error handling
 - [ ] Plugin(base on Wasm)
 - [ ] Use new web framework([Hertz](https://github.com/cloudwego/hertz))

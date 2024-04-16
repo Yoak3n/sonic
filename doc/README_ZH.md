@@ -87,7 +87,7 @@ See: https://hub.docker.com/r/gosonic/sonic
 
 ## TODO
 - [ ] i18n
-- [ ] PostgreSQL
+- [x] PostgreSQL
 - [ ] 更好的错误处理
 - [ ] 插件系统(基于 Wasm)
 - [ ] 使用新的web框架([Hertz](https://github.com/cloudwego/hertz))

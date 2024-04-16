@@ -65,7 +65,7 @@ func (g *GinLoggerMiddleware) LoggerWithConfig(conf GinLoggerConfig) app.Handler
 			clientIP := strings.ReplaceAll(ctx.ClientIP(), "\n", "")
 			clientIP = strings.ReplaceAll(clientIP, "\r", "")
 
-			logger.Info("[GIN]",
+			logger.Info("[HERTZ]",
 				zap.Time("beginTime", start),
 				zap.Int("status", ctx.Response.StatusCode()),
 				zap.Duration("latency", time.Since(start)),
