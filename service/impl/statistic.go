@@ -93,7 +93,7 @@ func (s statisticServiceImpl) Statistic(ctx context.Context) (*dto.Statistic, er
 	if err != nil {
 		return nil, err
 	}
-	postLikeCount, err := s.PostService.CountVisit(ctx)
+	postLikeCount, err := s.PostService.CountLike(ctx)
 	if err != nil {
 		return nil, err
 	}

@@ -257,8 +257,13 @@ func (p postServiceImpl) CountVisit(ctx context.Context) (int64, error) {
 
 func (p postServiceImpl) CountLike(ctx context.Context) (int64, error) {
 	var count float64
+	var err error
 	postDAL := dal.GetQueryByCtx(ctx).Post
-	err := postDAL.WithContext(ctx).Select(postDAL.Likes.Sum().IfNull(0)).Where(postDAL.Type.Eq(consts.PostTypePost), postDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
+	if dal.DBType == consts.DBTypePostgreSQL {
+		err = postDAL.WithContext(ctx).Select(postDAL.Likes.Sum()).Where(postDAL.Type.Eq(consts.PostTypePost), postDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
+	} else {
+		err = postDAL.WithContext(ctx).Select(postDAL.Likes.Sum().IfNull(0)).Where(postDAL.Type.Eq(consts.PostTypePost), postDAL.Status.Eq(consts.PostStatusPublished)).Scan(&count)
+	}
 	if err != nil {
 		return 0, WrapDBErr(err)
 	}

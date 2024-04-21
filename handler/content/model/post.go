@@ -137,7 +137,6 @@ func (p *PostModel) Content(ctx context.Context, post *entity.Post, token string
 	model["is_post"] = true
 
 	p.PostService.IncreaseVisit(ctx, post.ID)
-
 	model["target"] = postVO
 	model["type"] = "post"
 	return p.ThemeService.Render(ctx, "post")
